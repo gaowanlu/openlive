@@ -33,7 +33,7 @@ namespace Demo
         // cv::namedWindow("window");
         // 打开相机
         cv::Mat m_mat;
-        cv::VideoCapture capture("./1.mp4");
+        cv::VideoCapture capture(0);
         if (!capture.isOpened())
         {
             pthread_exit(nullptr);
