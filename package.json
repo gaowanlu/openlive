@@ -1,0 +1,20 @@
+{
+  "name": "gyp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild",
+    "build": "node-gyp build"
+  },
+  "author": "",
+  "license": "ISC",
+  "gypfile": true,
+  "devDependencies": {
+    "node-addon-api": "^6.0.0"
+  },
+  "dependencies": {
+    "socket.io": "^4.6.1"
+  }
+}
