@@ -27,7 +27,7 @@ camera thread(Loop)      <----------                     /|\
 ## environmental preparation
 
 libx264(https://www.videolan.org/developers/x264.html)  
-opencv(https://github.com/opencv/opencv)  
+opencv(https://github.com/opencv/opencv)
 
 ```shell
 sudo apt install libx264-dev
@@ -45,3 +45,5 @@ node index
 ```
 
 Browser Access http://IP:8887
+
+![show](./resources/2023-04-14213407.jpg)
