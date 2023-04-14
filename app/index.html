@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Real-time Image Streaming with Socket.IO and Canvas</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.js"
+        integrity="sha512-xbQU0+iHqhVt7VIXi6vBJKPh3IQBF5B84sSHdjKiSccyX/1ZI7Vnkt2/8y8uruj63/DVmCxfUNohPNruthTEQA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script type="text/javascript" src="Decoder.js"></script>
+    <script type="text/javascript" src="YUVCanvas.js"></script>
+    <script type="text/javascript" src="Player.js"></script>
+    <script type="text/javascript" src="stream.js"></script>
+    <script type="text/javascript" src="mp4.js"></script>
+</head>
+
+<body>
+    <div id="viewer" style="width: 100%;height:100%;"></div>
+</body>
+<script>
+    // 创建Socket.IO连接
+    const socket = io('http://127.0.0.1:8887/');
+    // 创建Broadway解码器
+    const video = new Player({
+        useWorker: true,
+        reuseMemory: true,
+        webgl: true
+    });
+    var playerElement = document.getElementById('viewer')
+    playerElement.appendChild(video.canvas)
+
+    // 监听Socket.IO消息事件
+    socket.on('chat message', (data) => {
+        // 将base64编码的字符串转换为二进制数据
+        const binaryData = atob(data);
+        // 将二进制数据转换为Uint8Array数组
+        const uint8Data = new Uint8Array(binaryData.length);
+        for (let i = 0; i < binaryData.length; i++) {
+            uint8Data[i] = binaryData.charCodeAt(i);
+        }
+        video.decode(uint8Data);
+    });
+
+    // 监听Socket.IO连接打开事件
+    socket.on('connect', () => {
+        console.log('Socket.IO connection opened');
+    });
+
+    // 监听Socket.IO连接关闭事件
+    socket.on('disconnect', () => {
+        console.log('Socket.IO connection closed');
+    });
+
+</script>
+
+</html>

@@ -46,8 +46,9 @@ server.listen(8887, "0.0.0.0", () => {
 let str = main.thread_start();
 const getInfo = () => {
     let str = main.get_mat();
+    //console.log(str.length);
     io.emit('chat message', str);
-    setTimeout(getInfo, 10);
+    setTimeout(getInfo, 1);
 }
 
 if (str === "true") {

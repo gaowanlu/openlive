@@ -4,9 +4,10 @@
 #include <string>
 #include <unistd.h>
 #include <list>
-#include <opencv2/opencv.hpp>
+#include <opencv4/opencv2/opencv.hpp>
 #include <vector>
 #include "base64/base64.h"
+#include "x264Encoder/x264Encoder.h"
 
 using v8::FunctionCallbackInfo;
 using v8::Isolate;
@@ -22,6 +23,7 @@ namespace Demo
     std::list<std::string> mat_buf;
     pthread_mutex_t mat_buf_mutex = PTHREAD_MUTEX_INITIALIZER;
     pthread_cond_t mat_buf_cond = PTHREAD_COND_INITIALIZER;
+    Encoder::x264Encoder encoder;
 
     /**
      * @brief 线程函数
@@ -38,6 +40,14 @@ namespace Demo
         {
             pthread_exit(nullptr);
         }
+        bool encoder_ret = encoder.create(capture.get(cv::CAP_PROP_FRAME_WIDTH),
+                                          capture.get(cv::CAP_PROP_FRAME_HEIGHT),
+                                          3,
+                                          capture.get(cv::CAP_PROP_FPS));
+        if (!encoder_ret)
+        {
+            return nullptr;
+        }
         while (1)
         {
             capture >> m_mat;
@@ -45,22 +55,40 @@ namespace Demo
             {
                 pthread_exit(nullptr);
             }
-            // 压缩图像
-            std::vector<uchar> buf;
-            cv::imencode(".jpg", m_mat, buf);
-            // 转换为base64
-            std::string base64 = base64_encode(buf.data(), buf.size());
-            // 只存储最新10帧
-            pthread_mutex_lock(&mat_buf_mutex);
-            if (mat_buf.size() > 10)
+            // 加入到编码器
+            int ret_size = encoder.encodeFrame(m_mat);
+            if (ret_size > 0)
             {
-                mat_buf.erase(mat_buf.begin());
+                uchar *buf = encoder.getEncodedFrame();
+                // 转为base64
+                std::string base64 = base64_encode(buf, ret_size);
+                // 只存储最新10帧
+                pthread_mutex_lock(&mat_buf_mutex);
+                if (mat_buf.size() > 10)
+                {
+                    mat_buf.erase(mat_buf.begin());
+                }
+                mat_buf.push_back(base64);
+                pthread_mutex_unlock(&mat_buf_mutex);
+                pthread_cond_broadcast(&mat_buf_cond);
+                cv::waitKey(1);
             }
-            mat_buf.push_back(base64);
-            pthread_mutex_unlock(&mat_buf_mutex);
-            pthread_cond_broadcast(&mat_buf_cond);
-            // cv::imshow("window", m_mat);
-            cv::waitKey(2);
+            // 压缩图像
+            // std::vector<uchar> buf;
+            // cv::imencode(".jpg", m_mat, buf);
+            // // 转换为base64
+            // std::string base64 = base64_encode(buf.data(), buf.size());
+            // // 只存储最新10帧
+            // pthread_mutex_lock(&mat_buf_mutex);
+            // if (mat_buf.size() > 10)
+            // {
+            //     mat_buf.erase(mat_buf.begin());
+            // }
+            // mat_buf.push_back(base64);
+            // pthread_mutex_unlock(&mat_buf_mutex);
+            // pthread_cond_broadcast(&mat_buf_cond);
+            // // cv::imshow("window", m_mat);
+            // cv::waitKey(1);
         }
         return nullptr;
     }
@@ -113,3 +141,7 @@ NODE_MODULE(NODE_GYP_MODULE_NAME, Initialize);
 // sudo apt install libopencv-dev
 // sudo apt install pkg-config
 // npm run build && node index
+
+/*
+"<!(pkg-config x264 --cflags)"
+*/

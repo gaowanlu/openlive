@@ -5,6 +5,7 @@ The OpenCV camera photo stream push to browser scheme used in local area network
 Environmental preparation
 
 ```shell
+sudo apt install libx264-dev
 sudo apt install -g node-gyp
 sudo apt install libopencv-dev pkg-config
 npm install
