@@ -1,33 +1,12 @@
 const main = require('./build/Release/main');
-const http = require('http');
+const express = require('express');
+const app = express();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 const fs = require('fs');
 
-const server = http.createServer((req, res) => {
-    console.log(req.url);
-    if (req.url === '/') {
-        // 读取 HTML 文件
-        fs.readFile('./index.html', (err, data) => {
-            if (err) {
-                res.writeHead(500);
-                return res.end('Error loading index.html');
-            }
-            // 返回 HTML 文件给客户端
-            res.writeHead(200, { 'Content-Type': 'text/html' });
-            res.end(data);
-        });
-    } else {
-        res.writeHead(404);
-        res.end('Page not found');
-    }
-});
+app.use(express.static('app'));
 
-const io = require('socket.io')(server, {
-    allowEIO4: true,
-    cors: {
-        origin: "*", // refer
-        methods: ["GET", "POST"]
-    }
-});
 io.on('connection', (socket) => {
     console.log('a user connected');
     socket.on('chat message', (msg) => {
@@ -44,14 +23,14 @@ server.listen(8887, "0.0.0.0", () => {
 
 //C++ 模块运行
 let str = main.thread_start();
+
 const getInfo = () => {
     let str = main.get_mat();
-    //console.log(str.length);
     io.emit('chat message', str);
     setTimeout(getInfo, 1);
 }
 
 if (str === "true") {
-    setTimeout(getInfo, 10);
+    getInfo();
 }
 

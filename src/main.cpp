@@ -62,9 +62,9 @@ namespace Demo
                 uchar *buf = encoder.getEncodedFrame();
                 // 转为base64
                 std::string base64 = base64_encode(buf, ret_size);
-                // 只存储最新10帧
+                // 只存储最新5帧
                 pthread_mutex_lock(&mat_buf_mutex);
-                if (mat_buf.size() > 10)
+                if (mat_buf.size() > 5)
                 {
                     mat_buf.erase(mat_buf.begin());
                 }
@@ -74,21 +74,23 @@ namespace Demo
                 cv::waitKey(1);
             }
             // 压缩图像
-            // std::vector<uchar> buf;
-            // cv::imencode(".jpg", m_mat, buf);
-            // // 转换为base64
-            // std::string base64 = base64_encode(buf.data(), buf.size());
-            // // 只存储最新10帧
-            // pthread_mutex_lock(&mat_buf_mutex);
-            // if (mat_buf.size() > 10)
-            // {
-            //     mat_buf.erase(mat_buf.begin());
+            // { //jpg -> base64 实时帧 方案
+            //     std::vector<uchar> buf;
+            //     cv::imencode(".jpg", m_mat, buf);
+            //     // 转换为base64
+            //     std::string base64 = base64_encode(buf.data(), buf.size());
+            //     // 只存储最新10帧
+            //     pthread_mutex_lock(&mat_buf_mutex);
+            //     if (mat_buf.size() > 10)
+            //     {
+            //         mat_buf.erase(mat_buf.begin());
+            //     }
+            //     mat_buf.push_back(base64);
+            //     pthread_mutex_unlock(&mat_buf_mutex);
+            //     pthread_cond_broadcast(&mat_buf_cond);
+            //     // cv::imshow("window", m_mat);
+            //     cv::waitKey(1);
             // }
-            // mat_buf.push_back(base64);
-            // pthread_mutex_unlock(&mat_buf_mutex);
-            // pthread_cond_broadcast(&mat_buf_cond);
-            // // cv::imshow("window", m_mat);
-            // cv::waitKey(1);
         }
         return nullptr;
     }
