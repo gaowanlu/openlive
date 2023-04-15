@@ -10,26 +10,26 @@ Can be used on Linux development boards such as Raspberry Pi and Linux system pe
 
 /**************************************************************************/
 *     C++ module             <---->  Node SsocketIO <---->  Browser(Player) *
-*  capture thread         <----------                       /|\		          *
-*    Take Frame(Loop)      start()                           |		          *
-*          |                                                 |		          *
-* 	| Image(get_mat())                                   	   |		          *
-* 	|                                             		       |		          *
-*      \|/                                                 	 |		          *
-* encode_thread(Loop)                                        |		          *
-*   |-Convert to YUV color                      (H264Stream) |		          *
-*   | space                                                  |		          *
-*   |                                                        |		          *
-*   |-H264 encoder encodi-                                   |		          *
-*   | ng                                                     |		          *
-*   |                                                        |		          *
-*   |-Add H264 stream                                        |		          *
-*   | data to buffer                                         |		          *
-*   | queue                                                  |		          *
-*      |                              (Loop)                 |              *
-*      |------------------------->   io.emit()  ------------ |		          *
-*          getFrame(Blocking)								                                *
-* 												                                                  *
+* capture thread         <----------                       /|\              *
+*    Take Frame(Loop)      start()                          |               *
+*   |                                                       |               *
+*   | Image(get_mat())                                      |               *
+*   |                                                       |               *
+*  \|/                                                      |               *
+* encode_thread(Loop)                                       |               *
+*   |-Convert to YUV color                      (H264Stream)|               *
+*   | space                                                 |               *
+*   |                                                       |               *
+*   |-H264 encoder encodi-                                  |               *
+*   | ng                                                    |               *
+*   |                                                       | 		          *
+*   |-Add H264 stream                                       | 		          *
+*   | data to buffer                                        | 		          *
+*   | queue                                                 | 		          *
+*      |                              (Loop)                |               *
+*      |------------------------->   io.emit()  ------------|               *
+*           getFrame(Blocking)                                              *
+*                                                                           *
 /**************************************************************************/
 ```
 
