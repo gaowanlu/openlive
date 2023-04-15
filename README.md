@@ -8,20 +8,29 @@ Can be used on Linux development boards such as Raspberry Pi and Linux system pe
 
 ```txt
 
-        C++ module        <---->  Node Server <---->  Browser(Player)
-camera thread(Loop)      <----------                     /|\
-    Take Frame          thread_start()                    |
-                                                          |
-    Convert to YUV color                      (H264Stream)|
-    space                                                 |
-                                                          |
-    H264 encoder encodi-                                  |
-    ng                                                    |
-                                                          |
-    Add H264 stream                                       |
-                        get_mat(Blocking                  |
-    data to buffer        waiting)                        |
-    queue                ----------->   io.emit()---------|
+/**************************************************************************/
+*     C++ module             <---->  Node SsocketIO <---->  Browser(Player) *
+*  capture thread         <----------                       /|\		   *
+*    Take Frame(Loop)      start()                          	|		   *
+*          |                                                    	|		   *
+* 	| Image(get_mat())                                   	|		   *
+* 	|                                             		|		   *
+*      \|/                                                 	|		   *
+* encode_thread(Loop)                                       	|		   *
+*   |-Convert to YUV color                      (H264Stream)	|		   *
+*   | space                                                 	|		   *
+*   |                                                       	|		   *
+*   |-H264 encoder encodi-                                  	|		   *
+*   | ng                                                    	|		   *
+*   |                                                       	|		   *
+*   |-Add H264 stream                                       	|		   *
+*   | data to buffer                                        	|		   *
+*   | queue                                                 	|		   *
+*      |                              (Loop)                	|              *
+*      |------------------------->   io.emit()  ------------	|		   *
+*          getFrame(Blocking)								   *
+* 												   *
+/**************************************************************************/
 ```
 
 ## environmental preparation

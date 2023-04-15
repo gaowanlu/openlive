@@ -5,6 +5,8 @@
                         "sources": [
                                 "src/base64/base64.cpp",
                                 "src/x264Encoder/x264Encoder.cpp",
+                                "src/capture_thread/capture_thread.cpp",
+                                "src/encode_thread/encode_thread.cpp",
                                 "src/main.cpp"
                                 # "<!(ls src/*/*.cpp)",
                                 # "<!(ls src/*.cpp)"
