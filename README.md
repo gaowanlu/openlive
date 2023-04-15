@@ -9,7 +9,7 @@ Can be used on Linux development boards such as Raspberry Pi and Linux system pe
 ```txt
 
 /**************************************************************************/
-*     C++ module             <---->  Node SsocketIO <---->  Browser(Player) *
+*     C++ module             <---->  Node SocketIO <---->  Browser(Player) *
 * capture thread         <----------                       /|\              *
 *    Take Frame(Loop)      start()                          |               *
 *   |                                                       |               *
