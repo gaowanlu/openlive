@@ -22,10 +22,10 @@ Can be used on Linux development boards such as Raspberry Pi and Linux system pe
 *   |                                                       |               *
 *   |-H264 encoder encodi-                                  |               *
 *   | ng                                                    |               *
-*   |                                                       | 		          *
-*   |-Add H264 stream                                       | 		          *
-*   | data to buffer                                        | 		          *
-*   | queue                                                 | 		          *
+*   |                                                       |               *
+*   |-Add H264 stream                                       |               *
+*   | data to buffer                                        |               *
+*   | queue                                                 |               *
 *      |                              (Loop)                |               *
 *      |------------------------->   io.emit()  ------------|               *
 *           getFrame(Blocking)                                              *
