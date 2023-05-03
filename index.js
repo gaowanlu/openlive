@@ -22,7 +22,7 @@ server.listen(20002, "0.0.0.0", () => {
 
 //C++ execute
 openlive.setConf({
-    "path": "http://10.34.119.245:8888",
+    "path": "0",
     "encodeBufferLen": 5,
     "captureBufferLen": 5
 });

@@ -45,6 +45,30 @@ sudo apt install libopencv-dev pkg-config
 npm install
 ```
 
+## conf
+
+```js
+let devVideo="http://10.34.119.245:8888";//stream,use MJPEG Streamer on Windows
+devVideo=0;// 0 is /dev/video0 in opencv api,default
+openlive.setConf({
+    "path": "http://10.34.119.245:8888",
+    "encodeBufferLen": 5,
+    "captureBufferLen": 5
+});
+//path：Path can be left unchecked and defaults to 0 to try opening the camera
+//encodeBufferLen：H264 encoder frame buffer size，default to 5
+//captureBufferLen：Camera frame buffer size，default to 5
+let startRes = openlive.start();//start threads
+const getInfo = () => {
+    let str = openlive.getMat();//blocking...
+    io.emit('chat message', str);
+    setTimeout(getInfo, 5);
+}
+if (startRes === true) {
+    getInfo();
+}
+```
+
 ## compile to run
 
 ```shell
