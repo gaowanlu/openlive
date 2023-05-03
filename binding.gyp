@@ -3,6 +3,7 @@
                 {
                         "target_name": "main",
                         "sources": [
+                                "src/conf/conf.cpp",
                                 "src/base64/base64.cpp",
                                 "src/x264Encoder/x264Encoder.cpp",
                                 "src/capture_thread/capture_thread.cpp",

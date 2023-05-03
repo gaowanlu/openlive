@@ -1,5 +1,6 @@
 #include "encode_thread.h"
 #include "base64/base64.h"
+#include "conf/conf.h"
 
 using namespace encode_thread;
 
@@ -38,9 +39,8 @@ void EncodeThread::run()
             uchar *buf = encoder.getEncodedFrame();
             // 转为base64
             std::string base64 = base64_encode(buf, ret_size);
-            // 只存储最新5帧
             pthread_mutex_lock(&mat_buf_mutex);
-            if (mat_buf.size() > 5)
+            if (mat_buf.size() > Conf::Conf::getEncodeBufferLen())
             {
                 mat_buf.erase(mat_buf.begin());
             }

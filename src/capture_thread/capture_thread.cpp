@@ -1,5 +1,6 @@
-#include "capture_thread.h"
 #include <iostream>
+
+#include "capture_thread.h"
 
 using namespace capture_thread;
 
