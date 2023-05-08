@@ -18,6 +18,26 @@ namespace OpenLive
     encode_thread::EncodeThread encode_thread;
     std::string mat;
 
+    class MyAsyncWorker : public Napi::AsyncWorker
+    {
+    public:
+        MyAsyncWorker(Napi::Function &callback) : Napi::AsyncWorker(callback)
+        {
+        }
+        ~MyAsyncWorker() // will be call,because using Napi::HandleScope in OnOK
+        {
+        }
+        void Execute() override
+        {
+            mat = encode_thread.getFrame(); // update frame
+        }
+        void OnOK() override
+        {
+            Napi::HandleScope scope(Napi::AsyncWorker::Env());
+            Callback().Call({Napi::String::New(Napi::AsyncWorker::Env(), mat.c_str())});
+        }
+    };
+
     Napi::Value start(const Napi::CallbackInfo &info)
     {
         bool isDev = true;
@@ -44,8 +64,11 @@ namespace OpenLive
 
     Napi::Value getMat(const Napi::CallbackInfo &info)
     {
-        mat = encode_thread.getFrame();
-        return Napi::String::New(info.Env(), mat.c_str());
+        Napi::Env env = info.Env();
+        Napi::Function cb = info[0].As<Napi::Function>();
+        MyAsyncWorker *worker = new MyAsyncWorker(cb);
+        worker->Queue();
+        return env.Undefined();
     }
 
     Napi::Value setConf(const Napi::CallbackInfo &info)

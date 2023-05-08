@@ -28,10 +28,12 @@ openlive.setConf({
 });
 
 let startRes = openlive.start();
+
 const getInfo = () => {
-    let str = openlive.getMat();//blocking...
-    io.emit('chat message', str);
-    setTimeout(getInfo, 5);
+    openlive.getMat((res) => {
+        io.emit('chat message', res);
+        setTimeout(getInfo, 1);
+    });
 }
 
 if (startRes === true) {

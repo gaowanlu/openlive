@@ -28,7 +28,7 @@ Can be used on Linux development boards such as Raspberry Pi and Linux system pe
 *   | queue                                                 |               *
 *      |                              (Loop)                |               *
 *      |------------------------->   io.emit()  ------------|               *
-*           getFrame(Blocking)                                              *
+*       getFrame  callback()                                                *
 *                                                                           *
 /**************************************************************************/
 ```
@@ -49,20 +49,21 @@ npm install
 
 ```js
 let devVideo="http://10.34.119.245:8888";//stream,use MJPEG Streamer on Windows
-devVideo=0;// 0 is /dev/video0 in opencv api,default
+devVideo="0";// 0 is /dev/video0 in opencv api,default
 openlive.setConf({
-    "path": "http://10.34.119.245:8888",
+    "path": devVideo,
     "encodeBufferLen": 5,
     "captureBufferLen": 5
 });
-//path：Path can be left unchecked and defaults to 0 to try opening the camera
+//path：Path can be left unchecked and defaults to "0" to try opening the camera
 //encodeBufferLen：H264 encoder frame buffer size，default to 5
 //captureBufferLen：Camera frame buffer size，default to 5
-let startRes = openlive.start();//start threads
+let startRes = openlive.start();
 const getInfo = () => {
-    let str = openlive.getMat();//blocking...
-    io.emit('chat message', str);
-    setTimeout(getInfo, 5);
+    openlive.getMat((res) => {
+        io.emit('chat message', res);
+        setTimeout(getInfo, 1);
+    });
 }
 if (startRes === true) {
     getInfo();
