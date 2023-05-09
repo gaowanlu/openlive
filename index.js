@@ -27,8 +27,6 @@ openlive.setConf({
     "captureBufferLen": 5
 });
 
-let startRes = openlive.start();
-
 const getInfo = () => {
     openlive.getMat((res) => {
         io.emit('chat message', res);
@@ -36,7 +34,7 @@ const getInfo = () => {
     });
 }
 
-if (startRes === true) {
+if (openlive.start()) {
     getInfo();
 }
 

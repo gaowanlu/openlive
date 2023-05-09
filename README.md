@@ -58,14 +58,14 @@ openlive.setConf({
 //path：Path can be left unchecked and defaults to "0" to try opening the camera
 //encodeBufferLen：H264 encoder frame buffer size，default to 5
 //captureBufferLen：Camera frame buffer size，default to 5
-let startRes = openlive.start();
 const getInfo = () => {
     openlive.getMat((res) => {
         io.emit('chat message', res);
         setTimeout(getInfo, 1);
     });
 }
-if (startRes === true) {
+
+if (openlive.start()) {
     getInfo();
 }
 ```
