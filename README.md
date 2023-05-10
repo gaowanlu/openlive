@@ -1,10 +1,10 @@
-# openlive (network image transmission)
+# OpenLive
 
 The OpenCV camera video stream used is pushed to the browser solution based on Base64 encoding in H264 format and transmitted using websocket. Use POSIX multithreading and C/C++plugins with Node API.
 
 Can be used on Linux development boards such as Raspberry Pi and Linux system personal computers
 
-## scheme
+## Scheme
 
 ```txt
 
@@ -28,15 +28,15 @@ Can be used on Linux development boards such as Raspberry Pi and Linux system pe
 *   | queue                                                 |               *
 *      |                              (Loop)                |               *
 *      |------------------------->   io.emit()  ------------|               *
-*       getFrame  callback()                                                *
+*       getFrame getMat  callback()                                         *
 *                                                                           *
 /**************************************************************************/
 ```
 
-## environmental preparation
+## Environmental Preparation
 
-libx264(https://www.videolan.org/developers/x264.html)  
-opencv(https://github.com/opencv/opencv)
+* [Libx264](https://www.videolan.org/developers/x264.html)
+* [OpenCV](https://github.com/opencv/opencv)
 
 ```shell
 sudo apt install libx264-dev
@@ -45,39 +45,58 @@ sudo apt install libopencv-dev pkg-config
 npm install
 ```
 
-## conf
+## API Documentation
+
+* `import openlive`
 
 ```js
-let devVideo="http://10.34.119.245:8888";//stream,use MJPEG Streamer on Windows
-devVideo="0";// 0 is /dev/video0 in opencv api,default
+const openlive = require('./build/Release/openlive');
+```
+
+* `setConf`
+
+configuration parameter
+
+```js
 openlive.setConf({
-    "path": devVideo,
+    "path": "0",
     "encodeBufferLen": 5,
     "captureBufferLen": 5
 });
-//path：Path can be left unchecked and defaults to "0" to try opening the camera
-//encodeBufferLen：H264 encoder frame buffer size，default to 5
-//captureBufferLen：Camera frame buffer size，default to 5
-const getInfo = () => {
-    openlive.getMat((res) => {
-        io.emit('chat message', res);
-        setTimeout(getInfo, 1);
-    });
-}
-
-if (openlive.start()) {
-    getInfo();
-}
 ```
 
-## compile to run
+path(string): The default is "0", opencv opens the camera's parameters, camera device number,/dev/video0. Simultaneously supports HTTP streaming, such as using MJPEG Streamer to push streams, which can be filled in ` http://ip:port `.  
+encodeBufferLen(number): Default value is 5 , encoder frame buffer size.
+captureBufferLen(number): The default value is 5, and the camera takes the image frame buffer size.  
+
+* `getMat`
+
+Retrieve the encoded H264 bare stream frame data from the encoder, and the returned data is encoded in Base64 format. It needs to be called after the start method is called before it can be called.
+
+```js
+openlive.getMat((res) => {
+
+});
+```
+
+* `start`
+
+Please call after calling the setConf method. The return value is a Boolean value. The range of openlive startup success is true, otherwise it returns false. After starting, the getMat method can be used.
+
+```js
+openlive.start()
+```
+
+## Examples
+
+* [Browser viewing of real-time camera images](./index.js)
+
+## Compile to run
 
 ```shell
 node-gyp configure
 npm run build
 node index
 ```
-
-Browser Access http://IP:8887
 
 ![show](./resources/2023-04-14213407.jpg)

@@ -1,4 +1,4 @@
-const openlive = require('./build/Release/main');
+const openlive = require('./build/Release/openlive');
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);

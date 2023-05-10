@@ -1,7 +1,7 @@
 {
         "targets": [
                 {
-                        "target_name": "main",
+                        "target_name": "openlive",
                         "sources": [
                                 "src/conf/conf.cpp",
                                 "src/base64/base64.cpp",
