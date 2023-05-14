@@ -33,7 +33,7 @@ jobs:
     - run: sudo apt install python-is-python3
     - run: sudo npm install node-addon-api
     - run: sudo apt install libx264-dev
-    - run: sudo apt install -g node-gyp
+    - run: sudo npm install -g node-gyp
     - run: sudo apt install pkg-config
     - run: sudo npm install
     - run: sudo node-gyp configure
