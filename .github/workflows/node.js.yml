@@ -30,6 +30,9 @@ jobs:
     - run: sudo apt install g++ gcc make cmake
     - run: sudo apt install libopencv-dev
     - run: sudo apt install libpthread-stubs0-dev
+    - run: sudo apt install build-essential python
+    - run: sudo npm install node-addon-api
+    - run: sudo npm install
     - run: sudo npm install -g node-gyp
     - run: sudo node-gyp configure
     - run: sudo node-gyp build
