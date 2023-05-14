@@ -29,7 +29,7 @@ jobs:
     - run: sudo apt update
     - run: sudo apt install g++ gcc make cmake
     - run: sudo apt install libopencv-dev
-    - run: sudo apt install pthread
+    - run: sudo apt install libpthread-stubs0-dev
     - run: sudo npm install -g node-gyp
     - run: sudo node-gyp configure
     - run: sudo node-gyp build
