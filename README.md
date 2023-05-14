@@ -40,7 +40,7 @@ Can be used on Linux development boards such as Raspberry Pi and Linux system pe
 
 ```shell
 sudo apt install libx264-dev
-sudo apt install -g node-gyp
+sudo npm install -g node-gyp
 sudo apt install libopencv-dev pkg-config
 npm install
 ```
