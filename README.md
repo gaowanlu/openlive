@@ -45,7 +45,7 @@ sudo apt install libopencv-dev pkg-config
 npm install
 ```
 
-## API Documentation
+## Nodejs API
 
 * `import openlive`
 
@@ -91,7 +91,7 @@ openlive.start()
 
 * [Browser viewing of real-time camera images](./index.js)
 
-## Compile to run
+## How to run it
 
 ```shell
 node-gyp configure
@@ -99,4 +99,4 @@ npm run build
 node index
 ```
 
-![show](./resources/2023-04-14213407.jpg)
+![show](./resources/2024-05-04013528.png)
