@@ -24,8 +24,9 @@ namespace OpenLive
         MyAsyncWorker(Napi::Function &callback) : Napi::AsyncWorker(callback)
         {
         }
-        ~MyAsyncWorker() // will be call,because using Napi::HandleScope in OnOK
+        ~MyAsyncWorker()
         {
+            // std::cout << "~MyAsyncWorker()" << std::endl;
         }
         void Execute() override
         {
@@ -34,7 +35,14 @@ namespace OpenLive
         void OnOK() override
         {
             Napi::HandleScope scope(Napi::AsyncWorker::Env());
-            Callback().Call({Napi::String::New(Napi::AsyncWorker::Env(), mat.c_str())});
+	    Napi::String str2js = Napi::String::New(Napi::AsyncWorker::Env(), mat.c_str(), mat.size());
+            Callback().Call({str2js});
+        }
+        void OnError(const Napi::Error& e) override
+	{
+	    Napi::HandleScope scope(Napi::AsyncWorker::Env());
+	    Napi::String str2js = Napi::String::New(Napi::AsyncWorker::Env(), "", 0);
+	    Callback().Call({str2js});
         }
     };
 
