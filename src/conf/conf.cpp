@@ -43,32 +43,32 @@ int64_t Conf::Conf::getCaptureBufferLen(int64_t len)
 
 void Conf::Conf::setCaptureWidth(int64_t width)
 {
-	Conf::Conf::captureWidth = width;
+    Conf::Conf::captureWidth = width;
 }
 
 int64_t Conf::Conf::getCaptureWidth()
 {
-	return Conf::Conf::captureWidth;
+    return Conf::Conf::captureWidth;
 }
 
 void Conf::Conf::setCaptureHeight(int64_t height)
 {
-	Conf::Conf::captureHeight = height;
+    Conf::Conf::captureHeight = height;
 }
 
 int64_t Conf::Conf::getCaptureHeight()
 {
-	return Conf::Conf::captureHeight;
+    return Conf::Conf::captureHeight;
 }
 
 void Conf::Conf::setFPS(int64_t fps)
 {
-	Conf::Conf::fps = fps;
+    Conf::Conf::fps = fps;
 }
 
 int64_t Conf::Conf::getFPS()
 {
-	return Conf::Conf::fps;
+    return Conf::Conf::fps;
 }
 
 void Conf::Conf::setConf(std::string key, std::string value)
@@ -91,14 +91,14 @@ void Conf::Conf::setConf(std::string key, int64_t value)
     }
     else if (key == "captureWidth")
     {
-	    setCaptureWidth(value);
+        setCaptureWidth(value);
     }
-    else if(key=="captureHeight")
+    else if (key == "captureHeight")
     {
-    	setCaptureHeight(value);
+        setCaptureHeight(value);
     }
-    else if(key=="captureFPS")
+    else if (key == "captureFPS")
     {
-	    setCaptureFPS(value);
+        setCaptureFPS(value);
     }
 }

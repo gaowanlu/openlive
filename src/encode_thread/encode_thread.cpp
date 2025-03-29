@@ -40,12 +40,12 @@ void EncodeThread::run()
             // 转为base64
             std::string base64 = base64_encode(buf, ret_size);
             pthread_mutex_lock(&mat_buf_mutex);
-	    // 缓冲满了则剔除第一个
+            // 缓冲满了则剔除第一个
             if (mat_buf.size() > Conf::Conf::getEncodeBufferLen())
             {
                 mat_buf.erase(mat_buf.begin());
             }
-	    // 加入到缓冲的末尾
+            // 加入到缓冲的末尾
             mat_buf.push_back(base64);
             pthread_mutex_unlock(&mat_buf_mutex);
             pthread_cond_broadcast(&mat_buf_cond);
@@ -73,4 +73,3 @@ void *EncodeThread::func(void *ptr)
     m_encoder->run();
     return nullptr;
 }
-

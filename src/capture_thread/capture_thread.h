@@ -13,8 +13,8 @@ namespace capture_thread
         CaptureThread();
         CaptureThread(int dev);
         CaptureThread(const std::string &path);
-        void open(int dev, int width =0 , int height=0, int fps = 0);
-        void open(const std::string &path, int width=0, int height=0, int fps = 0);
+        void open(int dev, int width = 0, int height = 0, int fps = 0);
+        void open(const std::string &path, int width = 0, int height = 0, int fps = 0);
         virtual ~CaptureThread();
         bool isOpen();
         bool start();

@@ -28,23 +28,21 @@ openlive.setConf({
     path: "0",
     encodeBufferLen: 5,
     captureBufferLen: 5,
-	captureWidth: 10000,
-	captureHeight: 10000,
-	captureFPS: 0
+    captureWidth: 10000,
+    captureHeight: 10000,
+    captureFPS: 0
 });
 
 // loop stream reader callback
 const getInfo = () => {
     openlive.getMat((res) => {
-	if(res && res.length > 0)
-	{
-           io.emit('chat message', res);
-	}
-	else
-	{
-           console.error("res null or  res.length <= 0");
-	}
-	setTimeout(getInfo, 1);
+        if (res && res.length > 0) {
+            io.emit('chat message', res);
+        }
+        else {
+            console.error("res null or  res.length <= 0");
+        }
+        setTimeout(getInfo, 1);
     });
 }
 
