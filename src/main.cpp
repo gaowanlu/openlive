@@ -62,14 +62,14 @@ namespace OpenLive
             capture_thread.open(std::stoi(Conf::Conf::getPath()),
                                 Conf::Conf::getCaptureWidth(),
                                 Conf::Conf::getCaptureHeight(),
-                                Conf::Conf::getFPS());
+                                Conf::Conf::getCaptureFPS());
         }
         else
         {
             capture_thread.open(Conf::Conf::getPath(),
                                 Conf::Conf::getCaptureWidth(),
                                 Conf::Conf::getCaptureHeight(),
-                                Conf::Conf::getFPS());
+                                Conf::Conf::getCaptureFPS());
         }
         capture_thread.start();
         encode_thread.start(&capture_thread);

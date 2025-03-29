@@ -23,8 +23,8 @@ namespace Conf
         static int64_t getCaptureWidth();
         static void setCaptureHeight(int64_t height);
         static int64_t getCaptureHeight();
-        static void setFPS(int64_t fps);
-        static int64_t getFPS();
+        static void setCaptureFPS(int64_t fps);
+        static int64_t getCaptureFPS();
 
     private:
         static std::string path;

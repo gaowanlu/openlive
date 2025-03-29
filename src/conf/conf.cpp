@@ -61,12 +61,12 @@ int64_t Conf::Conf::getCaptureHeight()
     return Conf::Conf::captureHeight;
 }
 
-void Conf::Conf::setFPS(int64_t fps)
+void Conf::Conf::setCaptureFPS(int64_t fps)
 {
     Conf::Conf::fps = fps;
 }
 
-int64_t Conf::Conf::getFPS()
+int64_t Conf::Conf::getCaptureFPS()
 {
     return Conf::Conf::fps;
 }
