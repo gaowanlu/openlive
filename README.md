@@ -89,10 +89,6 @@ Please call after calling the setConf method. The return value is a Boolean valu
 openlive.start()
 ```
 
-## Examples
-
-* [Browser viewing of real-time camera images](./index.js)
-
 ## How to run it
 
 ```shell
@@ -102,3 +98,23 @@ node index
 ```
 
 ![show](./resources/2024-05-04013528.png)
+
+## Examples
+
+* [index.js](./index.js) default function .
+* [local_svr.js](./local_svr.js) default function, to push stream for proxy_svr.js .
+* [proxy_svr.js](./proxy_svr.js) recv stream from local_svr, broadcast chat message to client .
+
+## Local_svr and proxy_svr
+
+Your camera device doesn’t have a public IP, so it can’t be accessed from outside your local network (for example, if the camera is in Beijing, China, and you’re trying to view it from your phone’s browser in Washington, D.C.).
+
+To fix this, you can set up the proxy_svr service on a cloud server to relay your video feed, making it available as a cloud-based service.
+
+```bash
+node local_svr.js(20003)  --auth(proxy message)
+                            |-->  node proxy_svr.js(20004)  --chat message--> client1
+                                                                          --> client2
+                                                                          --> client3
+                                                                          --> ...
+```
