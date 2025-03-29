@@ -10,22 +10,57 @@ CaptureThread::CaptureThread()
 
 CaptureThread::CaptureThread(int dev)
 {
+	if(isOpen())
+	{
+		return;
+	}
     capture.open(dev);
 }
 
 CaptureThread::CaptureThread(const std::string &path)
 {
+	if(isOpen())
+	{
+		return;
+	}
     capture.open(path.c_str());
 }
 
-void CaptureThread::open(int dev)
+void CaptureThread::open(int dev, int width, int height, int fps)
 {
+	if(isOpen())
+	{
+		return;
+	}
     capture.open(dev);
+    if(width>0&&height>0)
+    {
+    	capture.set(cv::CAP_PROP_FRAME_WIDTH, width);
+    	capture.set(cv::CAP_PROP_FRAME_HEIGHT, height);
+    }
+    if(fps>0)
+    {
+	    capture.set(cv::CAP_PROP_FRAME_FPS, fps);
+    }
+		    
 }
 
-void CaptureThread::open(const std::string &path)
+void CaptureThread::open(const std::string &path, int width, int height, int fps)
 {
+	if(isOpen())
+	{
+		return;
+	}
     capture.open(path.c_str());
+if(width>0&&height>0)
+{
+	capture.set(cv::CAP_PROP_FRAME_WIDTH, width);
+	capture.set(cv::CAP_PROP_FRAM_HEIGHT, height);
+}
+if(fps>0)
+{
+	capture.set(cv::CAP_PROP_FRAME_FPS, fps);
+}
 }
 
 CaptureThread::~CaptureThread()

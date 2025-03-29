@@ -59,11 +59,17 @@ namespace OpenLive
         }
         if (isDev)
         {
-            capture_thread.open(std::stoi(Conf::Conf::getPath()));
+            capture_thread.open(std::stoi(Conf::Conf::getPath()), 
+			    Conf::Conf::getCaptureWidth(),
+			    Conf::Conf::getCaptureHeight(),
+			    Conf::Conf::getFPS());
         }
         else
         {
-            capture_thread.open(Conf::Conf::getPath());
+            capture_thread.open(Conf::Conf::getPath(),
+			    Conf::Conf::getCaptureWidth(),
+			    Conf::Conf::getCaptureHeight(),
+			    Conf::Conf::getFPS());
         }
         capture_thread.start();
         encode_thread.start(&capture_thread);

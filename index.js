@@ -25,9 +25,12 @@ server.listen(20002, "0.0.0.0", () => {
 
 // openlive config
 openlive.setConf({
-    "path": "0",
-    "encodeBufferLen": 5,
-    "captureBufferLen": 5
+    path: "0",
+    encodeBufferLen: 5,
+    captureBufferLen: 5,
+	captureWidth: 10000,
+	captureHeight: 10000,
+	captureFPS: 0
 });
 
 // loop stream reader callback
