@@ -40,7 +40,7 @@ void CaptureThread::open(int dev, int width, int height, int fps)
     }
     if (fps > 0)
     {
-        capture.set(cv::CAP_PROP_FRAME_FPS, fps);
+        capture.set(cv::CAP_PROP_FPS, fps);
     }
 }
 
@@ -54,11 +54,11 @@ void CaptureThread::open(const std::string &path, int width, int height, int fps
     if (width > 0 && height > 0)
     {
         capture.set(cv::CAP_PROP_FRAME_WIDTH, width);
-        capture.set(cv::CAP_PROP_FRAM_HEIGHT, height);
+        capture.set(cv::CAP_PROP_FRAME_HEIGHT, height);
     }
     if (fps > 0)
     {
-        capture.set(cv::CAP_PROP_FRAME_FPS, fps);
+        capture.set(cv::CAP_PROP_FPS, fps);
     }
 }
 
