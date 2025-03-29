@@ -9,7 +9,7 @@ const io = new Server(server);
 const AUTH_TOKEN = 'secure_token_123'; // Replace with the same secure token as in index.js
 
 // Serve static files if needed
-app.use(express.static('public'));
+app.use(express.static('app'));
 
 // Socket.IO server logic
 io.on('connection', (socket) => {
@@ -20,7 +20,7 @@ io.on('connection', (socket) => {
 
         // Handle messages from index.js
         socket.on('proxy message', (msg) => {
-            console.log('Broadcasting message to browsers:', msg);
+            // console.log('Broadcasting message to browsers:', msg);
             io.sockets.sockets.forEach((clientSocket) => {
                 if (!clientSocket.handshake.auth.token) {
                     clientSocket.emit('chat message', msg); // Broadcast to browsers only
